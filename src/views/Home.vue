@@ -1,18 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    Hello world
+    {{ data }}
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+const liff = window.liff
 export default {
   name: 'home',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      data: null
+    }
+  },
+  mounted () {
+    liff.init((data) => {
+      this.data = data
+    })
   }
 }
 </script>
