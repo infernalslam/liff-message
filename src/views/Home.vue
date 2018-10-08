@@ -3,51 +3,46 @@
     <section class="hero is-fullheight">
       <div class="hero-head is-info">
         <h1> LINE APIs </h1>
+        <button @click="login()"> LINE LOGIN </button>
+        <router-link :to="{ name: 'setting', query: { token: 123 }}">User</router-link>
+        {{ error }}
       </div>
       <div class="hero-body">
-        <div class="container">
-          <div class="has-text-right">
-            <span>{{ data }}</span>
-          </div>
-          <div style="padding-bottom: 10px;" :class="{'border-select': select === item.name}" v-for="(item, index) in list" :key="index" >
-            <h1 class="title" @click="selectBox(item.name)">{{ item.name }}</h1>
-            <h2 class="subtitle"> {{ item.birth_year }} </h2>
-          </div>
-        </div>
+        {{ profile }}
       </div>
     </section>
-    {{ data }}
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 const liff = window.liff
 export default {
   name: 'home',
   data () {
     return {
-      data: null,
+      profile: null,
       list: [],
-      select: ''
+      select: '',
+      error: null
     }
   },
   async mounted () {
-    for (let i = 1; i <= 5; i++) {
-      let { data } = await axios.get(`https://swapi.co/api/people/${i}/`)
-      this.list.push(data)
-    }
-    if (localStorage.getItem('storageSelect')) {
-      this.select = localStorage.getItem('storageSelect')
-    }
-    liff.init((data) => {
-      this.data = data
+    liff.init(async (data) => {
+      let profile = await liff.getProfile()
+      this.profile = profile
     })
   },
   methods: {
     selectBox (name) {
       this.select = name
       localStorage.setItem('storageSelect', name)
+    },
+    async login () {
+      try {
+        window.location.href = `https://84cee381.ngrok.io/api/login`
+      } catch (err) {
+        this.error = err
+      }
     }
   }
 }

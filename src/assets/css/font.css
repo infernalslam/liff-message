@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'sukhumvit-tadmai';
+  src: url(../fonts/SukhumvitSet-Medium-04.ttf);
+}
+
+@font-face {
+  font-family: 'sukhumvit-tadmai';
+  src: url(../fonts/SukhumvitSet-Bold-06.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'volte';
+  src: url(../fonts/volte.ttf);
+  font-weight: 300;
+  font-style: normal;
+}
+
+:not(i) {
+  box-sizing: border-box !important;
+  font-family: 'volte', 'sukhumvit-tadmai' !important;
+  color: #555555;
+  letter-spacing: 1.2px;
+  font-weight: 500;
+}

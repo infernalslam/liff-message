@@ -9,8 +9,19 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: () => import('./views/Home')
+      name: 'game',
+      component: () => import('./views/Game')
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      props: (route) => ({ token: route.query.token }),
+      component: () => import('./views/Setting')
     }
+    // {
+    //   path: '/game',
+    //   name: 'game',
+    //   component: () => import('./views/Game')
+    // }
   ]
 })
