@@ -1,147 +1,90 @@
 <template>
-  <div class="mid-center">
-    <div class="stack-wrapper">
-      <stack ref="stack" :pages="someList" :stackinit="stackinit"></stack>
+  <div>
+    <div style="padding-bottom: 100px; padding-top: 10px; padding-left: 10px;">
+      <img src="@/assets/friends/line.png" alt="" width="100px;">
     </div>
-    <div class="controls">
-      <button @click="prev" class="button"><i class="prev"></i><span class="text-hidden">prev</span></button>
-      <button @click="next" class="button"><i class="next"></i><span class="text-hidden">next</span></button>
-    </div>
+    <swiper :options="swiperOption">
+        <swiper-slide v-for="(slide, index) in list" :key="index">
+          <img :src="slide.img" width="400px" height="200px">
+        </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
+      </swiper>
   </div>
 </template>
+
 <script>
-import stack from '../../node_modules/vue-tantan-stack/src/components/stack'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
-  name: 'stack',
+  name: 'game',
+  components: {
+    swiper,
+    swiperSlide
+  },
   data () {
     return {
-      someList: [],
-      stackinit: {
-        visible: 3
-      }
+      swiperOption: {
+        slidesPerView: 2,
+        spaceBetween: 5,
+        centeredSlides: true,
+        loop: true,
+        // freeMode: true,
+        scrollbar: {
+          el: '.swiper-scrollbar',
+          hide: true
+        },
+        // pagination: {
+        //   el: '.swiper-pagination',
+        //   clickable: true
+        // },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+      },
+      list: [],
+      images: [
+        { img: require('@/assets/friends/brown.png'), color: '#b5694f' },
+        { img: require('@/assets/friends/cony.png'), color: '#f97e98' },
+        { img: require('@/assets/friends/edward.png'), color: '#fdda00' },
+        { img: require('@/assets/friends/james.png'), color: '#45e7cf' },
+        { img: require('@/assets/friends/jessica.png'), color: '#af77d1' },
+        { img: require('@/assets/friends/leonard.png'), color: '#44d256' },
+        { img: require('@/assets/friends/moon.png'), color: '#52afff' },
+        { img: require('@/assets/friends/sally.png'), color: '#f98135' }
+      ]
     }
   },
-  mounted () {
-    let that = this
-    setTimeout(function () {
-      that.someList = [
-        {
-          html: '<img src="src/img/1.png" alt="01">'
-        },
-        {
-          html: '<img src="src/img/2.png" alt="02">'
-        },
-        {
-          html: '<img src="src/img/3.png" alt="03">'
-        },
-        {
-          html: '<img src="src/img/4.png" alt="04">'
-        },
-        {
-          html: '<img src="src/img/5.png" alt="05">'
-        },
-        {
-          html: '<img src="src/img/6.png" alt="06">'
-        },
-        {
-          html: '<img src="src/img/7.png" alt="07">'
-        }
-      ]
-    }, 2000)
+  created () {
+    this.craeteArray()
   },
-  components: {
-    stack
+  mounted () {
+  },
+  computed: {
+    colorBackground () {
+      let color = '#b5694f'
+      return `background-color: ${color}`
+    }
   },
   methods: {
-    prev () {
-      this.$refs.stack.$emit('prev')
-    },
-    next () {
-      this.$refs.stack.$emit('next')
+    craeteArray () {
+      for (let i = 0; i <= 7; i++) {
+        // this.list.push({ id: i, img: this.images[Math.floor(Math.random() * 7) + 0].img })
+        this.list.push({ id: i, img: this.images[i].img })
+      }
     }
   }
 }
 </script>
-<style>
-  .stack-wrapper{
-    margin: 0 auto;
-    position: relative;
-    z-index: 1000;
-    width: 320px;
-    height: 320px;
-    padding: 0;
-    list-style: none;
-    pointer-events: none;
+
+<style scoped>
+.swiper-slide {
+    width: 60%;
   }
-  .controls{
-    position: relative;
-    width: 200px;
-    text-align: center;
-    display:flex;/*Flex布局*/
-    display: -webkit-flex; /* Safari */
-    justify-content:space-around;
-    margin: 0 auto;
-    margin-top: 50px
+  .swiper-slide:nth-child(2n) {
+      width: 40%;
   }
-  .controls .button {
-    border: none;
-    background: none;
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    font-size: 16px;
-    width: 50px;
-    height: 50px;
-    z-index: 100;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    border-radius: 50%;
-    background: #fff;
+  .swiper-slide:nth-child(3n) {
+      width: 20%;
   }
-  .button .next{
-    display: inline-block;
-    width: 10px;
-    height:5px;
-    background: rgb(129,212,125);
-    line-height: 0;
-    font-size:0;
-    vertical-align: middle;
-    -webkit-transform: rotate(45deg);
-    left: -5px;
-    top: 2px;
-    position: relative;
-  }
-  .button .next:after{
-    content:'/';
-    display:block;
-    width: 20px;
-    height:5px;
-    background: rgb(129,212,125);
-    -webkit-transform: rotate(-90deg) translateY(-50%) translateX(50%);
-  }
-  .button .prev{
-    display: inline-block;
-    width: 20px;
-    height:5px;
-    background: rgb(230,104,104);
-    line-height: 0;
-    font-size:0;
-    vertical-align: middle;
-    -webkit-transform: rotate(45deg);
-  }
-  .button .prev:after{
-    content:'/';
-    display:block;
-    width: 20px;
-    height:5px;
-    background: rgb(230,104,104);
-    -webkit-transform: rotate(-90deg);
-  }
-  .controls .text-hidden {
-    position: absolute;
-    overflow: hidden;
-    width: 0;
-    height: 0;
-    color: transparent;
-    display: block;
-}
 </style>

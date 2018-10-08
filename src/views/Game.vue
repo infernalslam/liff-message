@@ -1,14 +1,29 @@
 <template>
   <div>
-      <swiper :options="swiperOption">
-        <swiper-slide v-for="(slide, index) in list" :key="index">
-          <img :src="slide.img" width="200px" height="200px">
-        </swiper-slide>
-          <div class="swiper-scrollbar" slot="scrollbar"></div>
-         <!-- <div class="swiper-pagination" slot="pagination"></div> -->
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
-      </swiper>
+    <section class="hero is-fullheight">
+      <!-- Hero head: will stick at the top -->
+      <div class="hero-head">
+      </div>
+
+      <!-- Hero content: will be in the middle -->
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <swiper :options="swiperOption">
+            <swiper-slide v-for="(slide, index) in list" :key="index">
+              <img :src="slide.img" width="200px" height="200px">
+            </swiper-slide>
+              <div class="swiper-scrollbar" slot="scrollbar"></div>
+          </swiper>
+        </div>
+      </div>
+
+      <!-- Hero footer: will stick at the bottom -->
+      <div class="hero-foot">
+        <div class="container has-text-right">
+          <img src="@/assets/friends/moon-bg.png" height="100px" width="60%">
+        </div>
+      </div>
+      </section>
   </div>
 </template>
 
@@ -24,10 +39,10 @@ export default {
     return {
       swiperOption: {
         slidesPerView: 1,
-        spaceBetween: 30,
+        spaceBetween: 10,
         centeredSlides: true,
         loop: true,
-        freeMode: true,
+        // freeMode: true,
         scrollbar: {
           el: '.swiper-scrollbar',
           hide: true
@@ -43,24 +58,38 @@ export default {
       },
       list: [],
       images: [
-        { img: require('@/assets/friends/brown.png') },
-        { img: require('@/assets/friends/cony.png') },
-        { img: require('@/assets/friends/edward.png') },
-        { img: require('@/assets/friends/james.png') },
-        { img: require('@/assets/friends/jessica.png') },
-        { img: require('@/assets/friends/leonard.png') },
-        { img: require('@/assets/friends/moon.png') },
-        { img: require('@/assets/friends/sally.png') }
+        { img: require('@/assets/friends/brown.png'), color: '#b5694f' },
+        { img: require('@/assets/friends/cony.png'), color: '#f97e98' },
+        { img: require('@/assets/friends/edward.png'), color: '#fdda00' },
+        { img: require('@/assets/friends/james.png'), color: '#45e7cf' },
+        { img: require('@/assets/friends/jessica.png'), color: '#af77d1' },
+        { img: require('@/assets/friends/leonard.png'), color: '#44d256' },
+        { img: require('@/assets/friends/moon.png'), color: '#52afff' },
+        { img: require('@/assets/friends/sally.png'), color: '#f98135' }
       ]
     }
   },
   created () {
     this.craeteArray()
   },
+  mounted () {
+    console.log(window)
+    // let mySwiper = new Swiper('.swiper-container', {})
+    // mySwiper.on('slideChange', function () {
+    //   console.log('slide changed')
+    // })
+  },
+  computed: {
+    colorBackground () {
+      let color = '#b5694f'
+      return `background-color: ${color}`
+    }
+  },
   methods: {
     craeteArray () {
-      for (let i = 0; i <= 10; i++) {
-        this.list.push({ id: i, img: this.images[Math.floor(Math.random() * 7) + 0].img })
+      for (let i = 0; i <= 7; i++) {
+        // this.list.push({ id: i, img: this.images[Math.floor(Math.random() * 7) + 0].img })
+        this.list.push({ id: i, img: this.images[i].img })
       }
     }
   }
@@ -92,4 +121,8 @@ export default {
     background-size: cover!important;
     width: 100%!important;
   }
+  /* .swiper-container {
+    width: 360px!important;
+    margin-left: 0px !important;
+  } */
 </style>

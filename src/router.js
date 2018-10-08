@@ -10,7 +10,7 @@ export default new Router({
     {
       path: '/',
       name: 'game',
-      component: () => import('./views/Game')
+      component: () => import('./views/Game2')
     },
     {
       path: '/setting',
